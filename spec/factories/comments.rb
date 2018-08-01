@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :comments do
+  factory :comment do
     text { Faker::Lorem.sentence }
     account_id nil
   end

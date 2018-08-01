@@ -32,12 +32,11 @@ class AccountsController < ApplicationController
 
   private
 
-  def account_params
-    # whitelist params
-    params.permit(:website, :username)
-  end
+    def account_params
+      params.permit(:website, :username)
+    end
 
-  def set_account
-    @account = Account.find(params[:id])
-  end
+    def set_account
+      @account = Account.find(params[:id])
+    end
 end
