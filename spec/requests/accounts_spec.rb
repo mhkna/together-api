@@ -6,10 +6,12 @@ RSpec.describe 'Accounts API', type: :request do
   let!(:accounts) { create_list(:account, 10, user_id: user.id) }
   let(:account_id) { accounts.first.id }
 
+  let(:headers) { valid_headers }
+
   # Test suite for GET /accounts
   describe 'GET /accounts' do
     # make HTTP get request before each example
-    before { get '/accounts' }
+    before { get '/accounts', params: {}, headers: headers }
 
     it 'returns accounts' do
       # Note `json` is a custom helper to parse JSON responses
@@ -24,7 +26,7 @@ RSpec.describe 'Accounts API', type: :request do
 
   # Test suite for GET /accounts/:id
   describe 'GET /accounts/:id' do
-    before { get "/accounts/#{account_id}" }
+    before { get "/accounts/#{account_id}", params: {}, headers: headers }
 
     context 'when the record exists' do
       it 'returns the account' do
@@ -53,9 +55,12 @@ RSpec.describe 'Accounts API', type: :request do
   # Test suite for POST /accounts
   describe 'POST /accounts' do
     # valid payload
-    let(:valid_attributes) { { website: 'instagram', username: 'mkmkmk4' } }
+    let(:valid_attributes) do
+      { website: 'instagram', username: 'mkmkmk4' }.to_json
+    end
+
     context 'when the request is valid' do
-      before { post '/accounts', params: valid_attributes }
+      before { post '/accounts', params: valid_attributes, headers: headers }
 
       it 'creates an account' do
         expect(json['website']).to eq('instagram')
@@ -67,14 +72,15 @@ RSpec.describe 'Accounts API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/accounts', params: { website: 'Foobar' } }
+      let(:invalid_attributes) { { website: nil }.to_json }
+      before { post '/accounts', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body)
+        expect(json['message'])
           .to match(/Validation failed: Username can't be blank/)
       end
     end
@@ -82,10 +88,10 @@ RSpec.describe 'Accounts API', type: :request do
 
   # Test suite for PUT /accounts/:id
   describe 'PUT /accounts/:id' do
-    let(:valid_attributes) { { username: 'putusername1' } }
+    let(:valid_attributes) { { username: 'putusername1' }.to_json }
 
     context 'when the record exists' do
-      before { put "/accounts/#{account_id}", params: valid_attributes }
+      before { put "/accounts/#{account_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -99,7 +105,7 @@ RSpec.describe 'Accounts API', type: :request do
 
   # Test suite for DELETE /accounts/:id
   describe 'DELETE /accounts/:id' do
-    before { delete "/accounts/#{account_id}" }
+    before { delete "/accounts/#{account_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

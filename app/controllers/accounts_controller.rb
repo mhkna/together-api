@@ -3,13 +3,13 @@ class AccountsController < ApplicationController
 
   # GET /accounts
   def index
-    @accounts = Account.all
+    @accounts = current_user.accounts
     json_response(@accounts)
   end
 
   # POST /accounts
   def create
-    @account = Account.create!(account_params)
+    @account = current_user.accounts.create!(account_params)
     json_response(@account, :created)
   end
 
