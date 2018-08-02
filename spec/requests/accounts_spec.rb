@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Accounts API', type: :request do
   # initialize test data
-  let!(:accounts) { create_list(:account, 10) }
+  let!(:user) { create(:user) }
+  let!(:accounts) { create_list(:account, 10, user_id: user.id) }
   let(:account_id) { accounts.first.id }
 
   # Test suite for GET /accounts
@@ -53,7 +54,6 @@ RSpec.describe 'Accounts API', type: :request do
   describe 'POST /accounts' do
     # valid payload
     let(:valid_attributes) { { website: 'instagram', username: 'mkmkmk4' } }
-
     context 'when the request is valid' do
       before { post '/accounts', params: valid_attributes }
 

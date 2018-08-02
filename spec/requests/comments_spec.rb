@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Comments API' do
   # Initialize the test data
-  let!(:account) { create(:account) }
+  let!(:user) { create(:user) }
+  let!(:account) { create(:account, user_id: user.id) }
   let!(:comments) { create_list(:comment, 20, account_id: account.id) }
   let(:account_id) { account.id }
   let(:id) { comments.first.id }
