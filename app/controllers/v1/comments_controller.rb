@@ -3,29 +3,24 @@ module V1
     before_action :set_account
     before_action :set_account_comment, only: [:show, :update, :destroy]
 
-    # GET /accounts/:account_id/comments
     def index
       json_response(@account.comments)
     end
 
-    # GET /accounts/:account_id/comments/:id
     def show
       json_response(@comment)
     end
 
-    # POST /accounts/:account_id/comments
     def create
       @account.comments.create!(comment_params)
       json_response(@account, :created)
     end
 
-    # PUT /accounts/:account_id/comments/:id
     def update
       @comment.update(comment_params)
       head :no_content
     end
 
-    # DELETE /accounts/:account_id/comments/:id
     def destroy
       @comment.destroy
       head :no_content

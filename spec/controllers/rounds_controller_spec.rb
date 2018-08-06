@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe RoundsController, type: :controller do
+RSpec.describe V1::RoundsController, type: :controller do
 
 end

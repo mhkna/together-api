@@ -2,30 +2,29 @@ module V1
   class AccountsController < ApplicationController
     before_action :set_account, only: [:show, :update, :destroy]
 
-    # GET /accounts
+    # GET
     def index
-      @accounts = current_user.accounts
+      @accounts = current_user.accounts.paginate(page: params[:page], per_page: 20)
       json_response(@accounts)
     end
 
-    # POST /accounts
+    # POST
     def create
       @account = current_user.accounts.create!(account_params)
       json_response(@account, :created)
     end
 
-    # GET /accounts/:id
     def show
       json_response(@account)
     end
 
-    # PUT /accounts/:id
+    # PUT
     def update
       @account.update(account_params)
       head :no_content
     end
 
-    # DELETE /accounts/:id
+    # DELETE
     def destroy
       @account.destroy
       head :no_content

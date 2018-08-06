@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+50.times do
+  account = Account.create!(website: 'instagram', username: Faker::Lorem.word)
+  account.comments.create!(text: Faker::Lorem.sentence, account_id: account.id)
+end
