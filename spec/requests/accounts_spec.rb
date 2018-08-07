@@ -72,7 +72,7 @@ RSpec.describe 'Accounts API', type: :request do
     end
 
     context 'when the request is invalid' do
-      let(:invalid_attributes) { { website: nil }.to_json }
+      let(:invalid_attributes) { { website: 'instagram' }.to_json }
       before { post '/accounts', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
