@@ -7,4 +7,7 @@ class AccountSerializer < ActiveModel::Serializer
        created_at: comment.created_at}
     end
   end
+  #def round
+  #  {round_id: self.object.round.id}
+  #end
 end
