@@ -1,6 +1,6 @@
 class AccountSerializer < ActiveModel::Serializer
-  attributes :id, :website, :username, :matched_accounts
-  has_many :comments
+  attributes :id, :website, :username, :comments, :matched_accounts
+
   def comments
     self.object.comments.map do |comment|
       {text: comment.text,
@@ -8,7 +8,7 @@ class AccountSerializer < ActiveModel::Serializer
     end
   end
   def matched_accounts
-    self.object.matched_accounts(2).map do |account|
+    self.object.matched_accounts(1).map do |account|
       {username: account.username}
     end
   end
