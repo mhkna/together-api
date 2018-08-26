@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Comments API' do
   let!(:user) { create(:user) }
-  let!(:account) { create(:account, user_id: user.id) }
+  let!(:round) { create(:round) }
+  let!(:account) { create(:account, user_id: user.id, round_id: round.id) }
   let!(:comments) { create_list(:comment, 20, account_id: account.id) }
   let(:account_id) { account.id }
   let(:id) { comments.first.id }

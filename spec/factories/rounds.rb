@@ -1,4 +1,4 @@
-# FactoryBot.define do
-#   factory :rounds do
-#   end
-# end
+FactoryBot.define do
+  factory :round do
+  end
+end

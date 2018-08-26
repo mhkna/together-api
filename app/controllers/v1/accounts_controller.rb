@@ -33,7 +33,7 @@ module V1
     private
 
       def account_params
-        params.permit(:website, :username)
+        params.permit(:website, :username, :round_id)
       end
 
       def set_account

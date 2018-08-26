@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Accounts API', type: :request do
   # initialize test data
   let!(:user) { create(:user) }
-  let!(:accounts) { create_list(:account, 10, user_id: user.id) }
+  let!(:round) { create(:round) }
+  let!(:accounts) { create_list(:account, 10, user_id: user.id, round_id: round.id) }
   let(:account_id) { accounts.first.id }
 
   let(:headers) { valid_headers }
@@ -56,7 +57,7 @@ RSpec.describe 'Accounts API', type: :request do
   describe 'POST /accounts' do
     # valid payload
     let(:valid_attributes) do
-      { website: 'instagram', username: 'mkmkmk4' }.to_json
+      { website: 'instagram', username: 'mkmkmk4', round_id: round.id }.to_json
     end
 
     context 'when the request is valid' do
@@ -72,7 +73,7 @@ RSpec.describe 'Accounts API', type: :request do
     end
 
     context 'when the request is invalid' do
-      let(:invalid_attributes) { { website: 'instagram' }.to_json }
+      let(:invalid_attributes) { { website: 'instagram', round_id: round.id }.to_json }
       before { post '/accounts', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do

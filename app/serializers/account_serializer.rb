@@ -9,8 +9,10 @@ class AccountSerializer < ActiveModel::Serializer
   # end
   def matched_info
     self.object.matched_accounts(1).map do |account|
-      {username: account.username,
-       comment: account.comments.first.text}
+      {
+       username: account.username,
+       comment: account.comments.first.try(:text)
+      }
     end
   end
   #def round
